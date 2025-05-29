@@ -1,0 +1,1604 @@
+{
+  "name": "atlassian-status-page",
+  "label": "Atlassian Status Page",
+  "version": "1.0.0",
+  "description": "This connector enables automated operations such as creating incidents, retrieving incident lists, managing active maintenances, and more.",
+  "publisher": "Fortinet",
+  "cs_approved": true,
+  "cs_compatible": true,
+  "category": "Incident Management",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
+  "help_online": "",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server URL",
+        "type": "text",
+        "name": "server_url",
+        "description": "Specify the host or server URL to authenticate with the Atlassian Statuspage REST API endpoint.",
+        "tooltip": "Specify the host or server URL to authenticate with the Atlassian Statuspage REST API endpoint.",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "value": "https://api.statuspage.io"
+      },
+      {
+        "title": "API Key",
+        "name": "api_key",
+        "type": "password",
+        "description": "Specify the API key to authenticate with the Atlassian Statuspage REST API endpoint.",
+        "tooltip": "Specify the API key to authenticate with the Atlassian Statuspage REST API endpoint.",
+        "required": true,
+        "editable": true,
+        "visible": true
+      },
+      {
+        "title": "Verify SSL",
+        "name": "verify_ssl",
+        "type": "checkbox",
+        "description": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is selected, i.e., set to true.",
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is selected, i.e., set to true.",
+        "required": false,
+        "value": true,
+        "editable": true,
+        "visible": true
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "create_incident",
+      "title": "Create Incident",
+      "description": "Creates an incident in Atlassian Statuspage based on the provided input parameters.",
+      "annotation": "create_incident",
+      "category": "investigation",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page from which the incident should be created.",
+          "tooltip": "Specify the unique identifier of the status page from which the incident should be created.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "name",
+          "title": "Name",
+          "description": "Specify the name of the incident to be shown on Atlassian Statuspage.",
+          "tooltip": "Specify the name of the incident to be shown on Atlassian Statuspage.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "description": "Select the status of the incident you want to create. Note: For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed",
+          "tooltip": "Select the status of the incident you want to create. Note: For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed",
+          "type": "select",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "options": [
+            "Investigating",
+            "Identified",
+            "Monitoring",
+            "Resolved",
+            "Scheduled",
+            "In Progress",
+            "Verifying",
+            "Completed"
+          ],
+          "onchange": {
+            "Scheduled": [
+              {
+                "name": "scheduled_for",
+                "title": "Scheduled from",
+                "description": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
+                "tooltip": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
+                "type": "datetime",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "name": "scheduled_until",
+                "title": "Scheduled from",
+                "description": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
+                "tooltip": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
+                "type": "datetime",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Scheduled Remind Prior",
+                "name": "scheduled_remind_prior",
+                "type": "checkbox",
+                "description": "Specifies whether a reminder notification should be sent to subscribers before a scheduled incident begins.",
+                "tooltip": "Specifies whether a reminder notification should be sent to subscribers before a scheduled incident begins.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Auto Transition to Maintenance State",
+                "name": "auto_transition_to_maintenance_state",
+                "type": "checkbox",
+                "description": "Specifies this parameter the incident will automatically change its status from scheduled to in_progress at the scheduled start time.",
+                "tooltip": "Specifies this parameter the incident will automatically change its status from scheduled to in_progress at the scheduled start time.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Scheduled Auto In-Progress",
+                "name": "scheduled_auto_in_progress",
+                "type": "checkbox",
+                "description": "Determines whether the scheduled incident should automatically change its status to in_progress at the time specified in the scheduled_for field. Note: Atlassian may use scheduled_auto_in_progress in newer API versions or for backward compatibility with certain integrations, but auto_transition_to_maintenance_state is generally preferred in documentation.",
+                "tooltip": "Specifies whether the incident should automatically transition to a resolved (operational) state at the time specified in the scheduled_until field. Note: Atlassian may use scheduled_auto_in_progress in newer API versions or for backward compatibility with certain integrations, but auto_transition_to_maintenance_state is generally preferred in documentation.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Auto Transition Deliver Notifications Start",
+                "name": "auto_transition_deliver_notifications_at_start",
+                "type": "checkbox",
+                "description": "Specifying this parameter notifications should be automatically sent to subscribers when a scheduled incident transitions to a resolved state at the scheduled end time (scheduled_until).",
+                "tooltip": "Specifying this parameter notifications should be automatically sent to subscribers when a scheduled incident transitions to a resolved state at the scheduled end time (scheduled_until).",
+                "required": false,
+                "editable": true,
+                "visible": true
+              }
+            ]
+          }
+        },
+        {
+          "title": "Impact Override",
+          "name": "impact_override",
+          "type": "select",
+          "description": "Select the impact override for the incident.",
+          "tooltip": "Select the impact override for the incident.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "options": [
+            "None",
+            "Maintenance",
+            "Minor",
+            "Major",
+            "Critical"
+          ]
+        },
+        {
+          "name": "body",
+          "title": "Comment",
+          "description": "Specify the detailed description or comment message of the incident. Note: Maximum limit is 25000 characters.",
+          "tooltip": "Specify the detailed description or comment message of the incident. Note: Maximum limit is 25000 characters.",
+          "type": "textarea",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "deliver_notifications",
+          "title": "Deliver Notifications",
+          "type": "checkbox",
+          "description": "Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.",
+          "tooltip": "Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "components",
+          "title": "Components",
+          "type": "json",
+          "description": "Map of status changes to apply to affected components.",
+          "tooltip": "Map of status changes to apply to affected components.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "component_ids",
+          "title": "Component IDs",
+          "type": "text",
+          "description": "Specify a CSV list of of component_ids affected by this incident.",
+          "tooltip": "Specify a CSV list of of component_ids affected by this incident.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "metadata",
+          "title": "Meta Data",
+          "type": "json",
+          "description": "Specify additional structured information(In JSON format)related information about the incident that doesn't belong to the main incident fields like name, status, or impact.",
+          "tooltip": "Specify additional structured information(In JSON format)related information about the incident that doesn't belong to the main incident fields like name, status, or impact.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "additional_fields",
+          "title": "Additional Fields",
+          "type": "json",
+          "description": "Specify any additional parameters in JSON format to create an incident.",
+          "tooltip": "Specify any additional parameters in JSON format to create an incident.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": {
+        "id": "",
+        "components": [
+          {
+            "id": "",
+            "page_id": "",
+            "group_id": "",
+            "created_at": "",
+            "updated_at": "",
+            "group": "",
+            "name": "",
+            "description": "",
+            "position": "",
+            "status": "",
+            "showcase": "",
+            "only_show_if_degraded": "",
+            "automation_email": "",
+            "start_date": ""
+          }
+        ],
+        "created_at": "",
+        "impact": "",
+        "impact_override": "",
+        "incident_updates": [
+          {
+            "id": "",
+            "incident_id": "",
+            "affected_components": [
+              {
+                "code": "",
+                "name": "",
+                "old_status": "",
+                "new_status": ""
+              }
+            ],
+            "body": "",
+            "created_at": "",
+            "custom_tweet": "",
+            "deliver_notifications": "",
+            "display_at": "",
+            "status": "",
+            "tweet_id": "",
+            "twitter_updated_at": "",
+            "updated_at": "",
+            "wants_twitter_update": ""
+          }
+        ],
+        "incident_impacts": [
+          {
+            "id": "",
+            "tenant_id": "",
+            "atlassian_organization_id": "",
+            "product_name": "",
+            "experiences": [
+              [
+              ]
+            ],
+            "created_at": ""
+          }
+        ],
+        "metadata": {
+          "jira": {
+            "issue_id": ""
+          }
+        },
+        "monitoring_at": "",
+        "name": "",
+        "page_id": "",
+        "postmortem_body": "",
+        "postmortem_body_last_updated_at": "",
+        "postmortem_ignored": "",
+        "postmortem_notified_subscribers": "",
+        "postmortem_notified_twitter": "",
+        "postmortem_published_at": "",
+        "resolved_at": "",
+        "scheduled_auto_completed": "",
+        "scheduled_auto_in_progress": "",
+        "scheduled_for": "",
+        "auto_transition_deliver_notifications_at_end": "",
+        "auto_transition_deliver_notifications_at_start": "",
+        "auto_transition_to_maintenance_state": "",
+        "auto_transition_to_operational_state": "",
+        "scheduled_remind_prior": "",
+        "scheduled_reminded_at": "",
+        "scheduled_until": "",
+        "shortlink": "",
+        "status": "",
+        "updated_at": "",
+        "reminder_intervals": ""
+      }
+    },
+    {
+      "operation": "get_incident",
+      "title": "Get Incident",
+      "annotation": "get_incident",
+      "category": "investigation",
+      "description": "Retrieve a specific incident from from Atlassian Statuspage.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "tooltip": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "incident_id",
+          "title": "Incident ID",
+          "description": "Specify the unique identifier of the incident to be deleted.",
+          "tooltip": "Specify the unique identifier of the incident to be deleted.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": {
+        "id": "",
+        "components": [
+          {
+            "id": "",
+            "page_id": "",
+            "group_id": "",
+            "created_at": "",
+            "updated_at": "",
+            "group": "",
+            "name": "",
+            "description": "",
+            "position": "",
+            "status": "",
+            "showcase": "",
+            "only_show_if_degraded": "",
+            "automation_email": "",
+            "start_date": ""
+          }
+        ],
+        "created_at": "",
+        "impact": "",
+        "impact_override": "",
+        "incident_updates": [
+          {
+            "id": "",
+            "incident_id": "",
+            "affected_components": [
+              {
+                "code": "",
+                "name": "",
+                "old_status": "",
+                "new_status": ""
+              }
+            ],
+            "body": "",
+            "created_at": "",
+            "custom_tweet": "",
+            "deliver_notifications": "",
+            "display_at": "",
+            "status": "",
+            "tweet_id": "",
+            "twitter_updated_at": "",
+            "updated_at": "",
+            "wants_twitter_update": ""
+          }
+        ],
+        "incident_impacts": [
+          {
+            "id": "",
+            "tenant_id": "",
+            "atlassian_organization_id": "",
+            "product_name": "",
+            "experiences": [
+              [
+              ]
+            ],
+            "created_at": ""
+          }
+        ],
+        "metadata": {
+          "jira": {
+            "issue_id": ""
+          }
+        },
+        "monitoring_at": "",
+        "name": "",
+        "page_id": "",
+        "postmortem_body": "",
+        "postmortem_body_last_updated_at": "",
+        "postmortem_ignored": "",
+        "postmortem_notified_subscribers": "",
+        "postmortem_notified_twitter": "",
+        "postmortem_published_at": "",
+        "resolved_at": "",
+        "scheduled_auto_completed": "",
+        "scheduled_auto_in_progress": "",
+        "scheduled_for": "",
+        "auto_transition_deliver_notifications_at_end": "",
+        "auto_transition_deliver_notifications_at_start": "",
+        "auto_transition_to_maintenance_state": "",
+        "auto_transition_to_operational_state": "",
+        "scheduled_remind_prior": "",
+        "scheduled_reminded_at": "",
+        "scheduled_until": "",
+        "shortlink": "",
+        "status": "",
+        "updated_at": "",
+        "reminder_intervals": ""
+      }
+    },
+    {
+      "operation": "update_incident",
+      "title": "Update Incident",
+      "annotation": "update_incident",
+      "category": "investigation",
+      "description": "Updates the details of an existing incident on a specific status page. This can include modifying the incident’s name, status, impact, or other relevant fields.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page from which the incident should be updated.",
+          "tooltip": "Specify the unique identifier of the status page from which the incident should be updated.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "incident_id",
+          "title": "Incident ID",
+          "description": "Specify the unique identifier of the incident to be updated.",
+          "tooltip": "Specify the unique identifier of the incident to be updated.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "name",
+          "title": "Name",
+          "description": "Specify the name of the incident to be updated.",
+          "tooltip": "Specify the name of the incident to be updated.",
+          "type": "text",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "title": "Status",
+          "name": "status",
+          "description": "Select the status of the incident you want to update. Note: For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed",
+          "tooltip": "Select the status of the incident you want to update. Note: For realtime incidents, valid values are investigating, identified, monitoring, and resolved. For scheduled incidents, valid values are scheduled, in_progress, verifying, and completed",
+          "type": "select",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "options": [
+            "Investigating",
+            "Identified",
+            "Monitoring",
+            "Resolved",
+            "Scheduled",
+            "In Progress",
+            "Verifying",
+            "Completed"
+          ],
+          "onchange": {
+            "Scheduled": [
+              {
+                "name": "scheduled_for",
+                "title": "Scheduled from",
+                "description": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
+                "tooltip": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
+                "type": "datetime",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "name": "scheduled_until",
+                "title": "Scheduled from",
+                "description": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
+                "tooltip": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
+                "type": "datetime",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Scheduled Remind Prior",
+                "name": "scheduled_remind_prior",
+                "type": "checkbox",
+                "description": "Specifies whether a reminder notification should be sent to subscribers before a scheduled incident begins.",
+                "tooltip": "Specifies whether a reminder notification should be sent to subscribers before a scheduled incident begins.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Auto Transition to Maintenance State",
+                "name": "auto_transition_to_maintenance_state",
+                "type": "checkbox",
+                "description": "Specifies this parameter the incident will automatically change its status from scheduled to in_progress at the scheduled start time.",
+                "tooltip": "Specifies this parameter the incident will automatically change its status from scheduled to in_progress at the scheduled start time.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Scheduled Auto In-Progress",
+                "name": "scheduled_auto_in_progress",
+                "type": "checkbox",
+                "description": "Determines whether the scheduled incident should automatically change its status to in_progress at the time specified in the scheduled_for field. Note: Atlassian may use scheduled_auto_in_progress in newer API versions or for backward compatibility with certain integrations, but auto_transition_to_maintenance_state is generally preferred in documentation.",
+                "tooltip": "Specifies whether the incident should automatically transition to a resolved (operational) state at the time specified in the scheduled_until field. Note: Atlassian may use scheduled_auto_in_progress in newer API versions or for backward compatibility with certain integrations, but auto_transition_to_maintenance_state is generally preferred in documentation.",
+                "required": false,
+                "editable": true,
+                "visible": true
+              },
+              {
+                "title": "Auto Transition Deliver Notifications Start",
+                "name": "auto_transition_deliver_notifications_at_start",
+                "type": "checkbox",
+                "description": "Specifying this parameter notifications should be automatically sent to subscribers when a scheduled incident transitions to a resolved state at the scheduled end time (scheduled_until).",
+                "tooltip": "Specifying this parameter notifications should be automatically sent to subscribers when a scheduled incident transitions to a resolved state at the scheduled end time (scheduled_until).",
+                "required": false,
+                "editable": true,
+                "visible": true
+              }
+            ]
+          }
+        },
+        {
+          "title": "Impact Override",
+          "name": "impact_override",
+          "type": "select",
+          "description": "Select the impact override for the incident.",
+          "tooltip": "Select the impact override for the incident.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "options": [
+            "None",
+            "Maintenance",
+            "Minor",
+            "Major",
+            "Critical"
+          ]
+        },
+        {
+          "name": "body",
+          "title": "Comment",
+          "description": "Specify the detailed description or comment message of the incident. Note: Maximum limit is 25000 characters.",
+          "tooltip": "Specify the detailed description or comment message of the incident. Note: Maximum limit is 25000 characters.",
+          "type": "textarea",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "deliver_notifications",
+          "title": "Deliver Notifications",
+          "type": "checkbox",
+          "description": "Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.",
+          "tooltip": "Deliver notifications to subscribers if this is true. If this is false, create an incident without notifying customers.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "components",
+          "title": "Components",
+          "type": "json",
+          "description": "Map of status changes to apply to affected components.",
+          "tooltip": "Map of status changes to apply to affected components.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "component_ids",
+          "title": "Component IDs",
+          "type": "text",
+          "description": "Specify a CSV list of of component ids affected by this incident.",
+          "tooltip": "Specify a CSV list of of component ids affected by this incident.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "metadata",
+          "title": "Meta Data",
+          "type": "json",
+          "description": "Specify additional structured information(In JSON format)related information about the incident that doesn't belong to the main incident fields like name, status, or impact.",
+          "tooltip": "specify additional structured information(In JSON format)related information about the incident that doesn't belong to the main incident fields like name, status, or impact.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "additional_fields",
+          "title": "Additional Fields",
+          "type": "json",
+          "description": "Specify any additional parameters in JSON format to create an incident.",
+          "tooltip": "Specify any additional parameters in JSON format to create an incident.",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": {
+        "incident": {
+          "name": "",
+          "status": "",
+          "impact_override": "",
+          "scheduled_for": "",
+          "scheduled_until": "",
+          "scheduled_remind_prior": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_auto_completed": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "reminder_intervals": "",
+          "metadata": {},
+          "deliver_notifications": "",
+          "auto_tweet_at_beginning": "",
+          "auto_tweet_on_completion": "",
+          "auto_tweet_on_creation": "",
+          "auto_tweet_one_hour_before": "",
+          "backfill_date": "",
+          "backfilled": "",
+          "body": "",
+          "components": {
+            "01sfln3x1y16": ""
+          },
+          "component_ids": [
+          ],
+          "scheduled_auto_transition": ""
+        }
+      }
+    },
+    {
+      "operation": "delete_incident",
+      "title": "Delete Incident",
+      "annotation": "delete_incident",
+      "category": "investigation",
+      "description": "Deletes a specific incident from a status page. This operation permanently removes the incident and all its associated updates from the page.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "tooltip": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "incident_id",
+          "title": "Incident ID",
+          "description": "Specify the unique identifier of the incident to be deleted.",
+          "tooltip": "Specify the unique identifier of the incident to be deleted.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": {
+        "id": "",
+        "components": [
+          {
+            "id": "",
+            "page_id": "",
+            "group_id": "",
+            "created_at": "",
+            "updated_at": "",
+            "group": "",
+            "name": "",
+            "description": "",
+            "position": "",
+            "status": "",
+            "showcase": "",
+            "only_show_if_degraded": "",
+            "automation_email": "",
+            "start_date": ""
+          }
+        ],
+        "created_at": "",
+        "impact": "",
+        "impact_override": "",
+        "incident_updates": [
+          {
+            "id": "",
+            "incident_id": "",
+            "affected_components": [
+              {
+                "code": "",
+                "name": "",
+                "old_status": "",
+                "new_status": ""
+              }
+            ],
+            "body": "",
+            "created_at": "",
+            "custom_tweet": "",
+            "deliver_notifications": "",
+            "display_at": "",
+            "status": "",
+            "tweet_id": "",
+            "twitter_updated_at": "",
+            "updated_at": "",
+            "wants_twitter_update": ""
+          }
+        ],
+        "incident_impacts": [
+          {
+            "id": "",
+            "tenant_id": "",
+            "atlassian_organization_id": "",
+            "product_name": "",
+            "experiences": [
+              [
+              ]
+            ],
+            "created_at": ""
+          }
+        ],
+        "metadata": {
+          "jira": {
+            "issue_id": ""
+          }
+        },
+        "monitoring_at": "",
+        "name": "",
+        "page_id": "",
+        "postmortem_body": "",
+        "postmortem_body_last_updated_at": "",
+        "postmortem_ignored": "",
+        "postmortem_notified_subscribers": "",
+        "postmortem_notified_twitter": "",
+        "postmortem_published_at": "",
+        "resolved_at": "",
+        "scheduled_auto_completed": "",
+        "scheduled_auto_in_progress": "",
+        "scheduled_for": "",
+        "auto_transition_deliver_notifications_at_end": "",
+        "auto_transition_deliver_notifications_at_start": "",
+        "auto_transition_to_maintenance_state": "",
+        "auto_transition_to_operational_state": "",
+        "scheduled_remind_prior": "",
+        "scheduled_reminded_at": "",
+        "scheduled_until": "",
+        "shortlink": "",
+        "status": "",
+        "updated_at": "",
+        "reminder_intervals": ""
+      }
+    },
+    {
+      "operation": "get_list_status_pages",
+      "title": "Get List Status Pages",
+      "annotation": "get_list_status_pages",
+      "category": "investigation",
+      "description": "Retrieves a list of all status pages from Atlassian Statuspage.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "created_at": "",
+          "updated_at": "",
+          "name": "",
+          "page_description": "",
+          "headline": "",
+          "branding": "",
+          "subdomain": "",
+          "domain": "",
+          "url": "",
+          "support_url": "",
+          "hidden_from_search": "",
+          "allow_page_subscribers": "",
+          "allow_incident_subscribers": "",
+          "allow_email_subscribers": "",
+          "allow_sms_subscribers": "",
+          "allow_rss_atom_feeds": "",
+          "allow_webhook_subscribers": "",
+          "notifications_from_email": "",
+          "notifications_email_footer": "",
+          "activity_score": "",
+          "twitter_username": "",
+          "viewers_must_be_team_members": "",
+          "ip_restrictions": "",
+          "city": "",
+          "state": "",
+          "country": "",
+          "time_zone": "",
+          "css_body_background_color": "",
+          "css_font_color": "",
+          "css_light_font_color": "",
+          "css_greens": "",
+          "css_yellows": "",
+          "css_oranges": "",
+          "css_blues": "",
+          "css_reds": "",
+          "css_border_color": "",
+          "css_graph_color": "",
+          "css_link_color": "",
+          "css_no_data": "",
+          "favicon_logo": "",
+          "transactional_logo": "",
+          "hero_cover": "",
+          "email_logo": "",
+          "twitter_logo": ""
+        }
+      ]
+    },
+    {
+      "operation": "get_list_incidents",
+      "title": "Get List Incidents",
+      "annotation": "get_list_incidents",
+      "category": "investigation",
+      "description": "Retrieves a list of active and historical incidents, including real-time outages and scheduled maintenance incidents associated with a specified Statuspage.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the Statuspage from which you want to retrieve the list of incidents.",
+          "tooltip": "Specify the unique identifier of the Statuspage from which you want to retrieve the list of incidents.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "q",
+          "title": "Query",
+          "description": "If this is specified, search for the text query string in the incidents' name, status, postmortem_body, and incident_updates fields.",
+          "tooltip": "If this is specified, search for the text query string in the incidents' name, status, postmortem_body, and incident_updates fields.",
+          "type": "text",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "limit",
+          "title": "Limit",
+          "description": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "tooltip": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "page",
+          "title": "Offset",
+          "description": "Specify the page offset for pagination.",
+          "tooltip": "Specify the page offset for pagination.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "components": [
+            {
+              "id": "",
+              "page_id": "",
+              "group_id": "",
+              "created_at": "",
+              "updated_at": "",
+              "group": "",
+              "name": "",
+              "description": "",
+              "position": "",
+              "status": "",
+              "showcase": "",
+              "only_show_if_degraded": "",
+              "automation_email": "",
+              "start_date": ""
+            }
+          ],
+          "created_at": "",
+          "impact": "",
+          "impact_override": "",
+          "incident_updates": [
+            {
+              "id": "",
+              "incident_id": "",
+              "affected_components": [
+                {
+                  "code": "",
+                  "name": "",
+                  "old_status": "",
+                  "new_status": ""
+                }
+              ],
+              "body": "",
+              "created_at": "",
+              "custom_tweet": "",
+              "deliver_notifications": "",
+              "display_at": "",
+              "status": "",
+              "tweet_id": "",
+              "twitter_updated_at": "",
+              "updated_at": "",
+              "wants_twitter_update": ""
+            }
+          ],
+          "incident_impacts": [
+            {
+              "id": "",
+              "tenant_id": "",
+              "atlassian_organization_id": "",
+              "product_name": "",
+              "experiences": [
+                [
+                ]
+              ],
+              "created_at": ""
+            }
+          ],
+          "metadata": {
+            "jira": {
+              "issue_id": ""
+            }
+          },
+          "monitoring_at": "",
+          "name": "",
+          "page_id": "",
+          "postmortem_body": "",
+          "postmortem_body_last_updated_at": "",
+          "postmortem_ignored": "",
+          "postmortem_notified_subscribers": "",
+          "postmortem_notified_twitter": "",
+          "postmortem_published_at": "",
+          "resolved_at": "",
+          "scheduled_auto_completed": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_for": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_remind_prior": "",
+          "scheduled_reminded_at": "",
+          "scheduled_until": "",
+          "shortlink": "",
+          "status": "",
+          "updated_at": "",
+          "reminder_intervals": ""
+        }
+      ]
+    },
+    {
+      "operation": "get_active_maintenance",
+      "title": "Get Active Maintenance Incidents",
+      "annotation": "get_active_maintenance",
+      "category": "investigation",
+      "description": "Retrieves a list of all currently active scheduled maintenance incidents for the specified Statuspage.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page for which you want to retrieve the list of active maintenance incidents.",
+          "tooltip": "Specify the unique identifier of the status page for which you want to retrieve the list of active maintenance incidents.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "per_page",
+          "title": "Limit",
+          "description": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "tooltip": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "page",
+          "title": "Offset",
+          "description": "Specify the page offset for pagination.",
+          "tooltip": "Specify the page offset for pagination.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "components": [
+            {
+              "id": "",
+              "page_id": "",
+              "group_id": "",
+              "created_at": "",
+              "updated_at": "",
+              "group": "",
+              "name": "",
+              "description": "",
+              "position": "",
+              "status": "",
+              "showcase": "",
+              "only_show_if_degraded": "",
+              "automation_email": "",
+              "start_date": ""
+            }
+          ],
+          "created_at": "",
+          "impact": "",
+          "impact_override": "",
+          "incident_updates": [
+            {
+              "id": "",
+              "incident_id": "",
+              "affected_components": [
+                {
+                  "code": "",
+                  "name": "",
+                  "old_status": "",
+                  "new_status": ""
+                }
+              ],
+              "body": "",
+              "created_at": "",
+              "custom_tweet": "",
+              "deliver_notifications": "",
+              "display_at": "",
+              "status": "",
+              "tweet_id": "",
+              "twitter_updated_at": "",
+              "updated_at": "",
+              "wants_twitter_update": ""
+            }
+          ],
+          "incident_impacts": [
+            {
+              "id": "",
+              "tenant_id": "",
+              "atlassian_organization_id": "",
+              "product_name": "",
+              "experiences": [
+                [
+                ]
+              ],
+              "created_at": ""
+            }
+          ],
+          "metadata": {
+            "jira": {
+              "issue_id": ""
+            }
+          },
+          "monitoring_at": "",
+          "name": "",
+          "page_id": "",
+          "postmortem_body": "",
+          "postmortem_body_last_updated_at": "",
+          "postmortem_ignored": "",
+          "postmortem_notified_subscribers": "",
+          "postmortem_notified_twitter": "",
+          "postmortem_published_at": "",
+          "resolved_at": "",
+          "scheduled_auto_completed": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_for": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_remind_prior": "",
+          "scheduled_reminded_at": "",
+          "scheduled_until": "",
+          "shortlink": "",
+          "status": "",
+          "updated_at": "",
+          "reminder_intervals": ""
+        }
+      ]
+    },
+    {
+      "operation": "get_upcoming_incidents",
+      "title": "Get Upcoming Incidents",
+      "annotation": "get_upcoming_incidents",
+      "category": "investigation",
+      "description": "Retrieves a list of upcoming incidents scheduled for a specific status page. Upcoming incidents are those that have been created and scheduled but have not yet started.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page for which you want to retrieve the list of active upcoming incidents.",
+          "tooltip": "Specify the unique identifier of the status page for which you want to retrieve the list of active upcoming incidents.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "per_page",
+          "title": "Limit",
+          "description": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "tooltip": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "page",
+          "title": "Offset",
+          "description": "Specify the page offset for pagination.",
+          "tooltip": "Specify the page offset for pagination.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "components": [
+            {
+              "id": "",
+              "page_id": "",
+              "group_id": "",
+              "created_at": "",
+              "updated_at": "",
+              "group": "",
+              "name": "",
+              "description": "",
+              "position": "",
+              "status": "",
+              "showcase": "",
+              "only_show_if_degraded": "",
+              "automation_email": "",
+              "start_date": ""
+            }
+          ],
+          "created_at": "",
+          "impact": "",
+          "impact_override": "",
+          "incident_updates": [
+            {
+              "id": "",
+              "incident_id": "",
+              "affected_components": [
+                {
+                  "code": "",
+                  "name": "",
+                  "old_status": "",
+                  "new_status": ""
+                }
+              ],
+              "body": "",
+              "created_at": "",
+              "custom_tweet": "",
+              "deliver_notifications": "",
+              "display_at": "",
+              "status": "",
+              "tweet_id": "",
+              "twitter_updated_at": "",
+              "updated_at": "",
+              "wants_twitter_update": true
+            }
+          ],
+          "incident_impacts": [
+            {
+              "id": "",
+              "tenant_id": "",
+              "atlassian_organization_id": "",
+              "product_name": "",
+              "experiences": [
+                [
+                ]
+              ],
+              "created_at": ""
+            }
+          ],
+          "metadata": {
+            "jira": {
+              "issue_id": ""
+            }
+          },
+          "monitoring_at": "",
+          "name": "",
+          "page_id": "",
+          "postmortem_body": "",
+          "postmortem_body_last_updated_at": "",
+          "postmortem_ignored": "",
+          "postmortem_notified_subscribers": "",
+          "postmortem_notified_twitter": "",
+          "postmortem_published_at": "",
+          "resolved_at": "",
+          "scheduled_auto_completed": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_for": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_remind_prior": "",
+          "scheduled_reminded_at": "",
+          "scheduled_until": "",
+          "shortlink": "",
+          "status": "",
+          "updated_at": "",
+          "reminder_intervals": ""
+        }
+      ]
+    },
+    {
+      "operation": "get_scheduled_incidents",
+      "title": "Get Scheduled Incidents",
+      "annotation": "get_scheduled_incidents",
+      "category": "investigation",
+      "description": "Retrieves a list of all scheduled incidents, including both upcoming and ongoing scheduled maintenance events, for a specific status page.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page for which you want to retrieve the list of scheduled incidents.",
+          "tooltip": "Specify the unique identifier of the status page for which you want to retrieve the list of scheduled incidents.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "per_page",
+          "title": "Limit",
+          "description": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "tooltip": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "page",
+          "title": "Offset",
+          "description": "Specify the page offset for pagination.",
+          "tooltip": "Specify the page offset for pagination.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "components": [
+            {
+              "id": "",
+              "page_id": "",
+              "group_id": "",
+              "created_at": "",
+              "updated_at": "",
+              "group": "",
+              "name": "",
+              "description": "",
+              "position": "",
+              "status": "",
+              "showcase": "",
+              "only_show_if_degraded": "",
+              "automation_email": "",
+              "start_date": ""
+            }
+          ],
+          "created_at": "",
+          "impact": "",
+          "impact_override": "",
+          "incident_updates": [
+            {
+              "id": "",
+              "incident_id": "",
+              "affected_components": [
+                {
+                  "code": "",
+                  "name": "",
+                  "old_status": "",
+                  "new_status": ""
+                }
+              ],
+              "body": "",
+              "created_at": "",
+              "custom_tweet": "",
+              "deliver_notifications": "",
+              "display_at": "",
+              "status": "",
+              "tweet_id": "",
+              "twitter_updated_at": "",
+              "updated_at": "",
+              "wants_twitter_update": ""
+            }
+          ],
+          "incident_impacts": [
+            {
+              "id": "",
+              "tenant_id": "",
+              "atlassian_organization_id": "",
+              "product_name": "",
+              "experiences": [
+                [
+                ]
+              ],
+              "created_at": ""
+            }
+          ],
+          "metadata": {
+            "jira": {
+              "issue_id": ""
+            }
+          },
+          "monitoring_at": "",
+          "name": "",
+          "page_id": "",
+          "postmortem_body": "",
+          "postmortem_body_last_updated_at": "",
+          "postmortem_ignored": "",
+          "postmortem_notified_subscribers": "",
+          "postmortem_notified_twitter": "",
+          "postmortem_published_at": "",
+          "resolved_at": "",
+          "scheduled_auto_completed": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_for": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_remind_prior": "",
+          "scheduled_reminded_at": "",
+          "scheduled_until": "",
+          "shortlink": "",
+          "status": "",
+          "updated_at": "",
+          "reminder_intervals": ""
+        }
+      ]
+    },
+    {
+      "operation": "get_unresolved_incidents",
+      "title": "Get Unresolved Incidents",
+      "annotation": "get_unresolved_incidents",
+      "category": "investigation",
+      "http_method": "GET",
+      "description": "Retrieves a list of all unresolved incidents for a specific status page. Unresolved incidents are those that are currently open and have not yet been marked as resolved",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "page_id",
+          "title": "Page ID",
+          "description": "Specify the unique identifier of the status page for which you want to retrieve the list of unresolved incidents.",
+          "tooltip": "Specify the unique identifier of the status page for which you want to retrieve the list of unresolved incidents.",
+          "type": "text",
+          "required": true,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "per_page",
+          "title": "Limit",
+          "description": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "tooltip": "The maximum number of rows to return per page. The default and maximum limit is 100.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        },
+        {
+          "name": "page",
+          "title": "Offset",
+          "description": "Specify the page offset for pagination.",
+          "tooltip": "Specify the page offset for pagination.",
+          "type": "integer",
+          "required": false,
+          "editable": true,
+          "visible": true
+        }
+      ],
+      "output_schema": [
+        {
+          "id": "",
+          "components": [
+            {
+              "id": "",
+              "page_id": "",
+              "group_id": "",
+              "created_at": "",
+              "updated_at": "",
+              "group": "",
+              "name": "",
+              "description": "",
+              "position": "",
+              "status": "",
+              "showcase": "",
+              "only_show_if_degraded": "",
+              "automation_email": "",
+              "start_date": ""
+            }
+          ],
+          "created_at": "",
+          "impact": "",
+          "impact_override": "",
+          "incident_updates": [
+            {
+              "id": "",
+              "incident_id": "",
+              "affected_components": [
+                {
+                  "code": "",
+                  "name": "",
+                  "old_status": "",
+                  "new_status": ""
+                }
+              ],
+              "body": "",
+              "created_at": "",
+              "custom_tweet": "",
+              "deliver_notifications": "",
+              "display_at": "",
+              "status": "",
+              "tweet_id": "",
+              "twitter_updated_at": "",
+              "updated_at": "",
+              "wants_twitter_update": ""
+            }
+          ],
+          "incident_impacts": [
+            {
+              "id": "",
+              "tenant_id": "",
+              "atlassian_organization_id": "",
+              "product_name": "",
+              "experiences": [
+                [
+                ]
+              ],
+              "created_at": ""
+            }
+          ],
+          "metadata": {
+            "jira": {
+              "issue_id": ""
+            }
+          },
+          "monitoring_at": "",
+          "name": "",
+          "page_id": "",
+          "postmortem_body": "",
+          "postmortem_body_last_updated_at": "",
+          "postmortem_ignored": "",
+          "postmortem_notified_subscribers": "",
+          "postmortem_notified_twitter": "",
+          "postmortem_published_at": "",
+          "resolved_at": "",
+          "scheduled_auto_completed": "",
+          "scheduled_auto_in_progress": "",
+          "scheduled_for": "",
+          "auto_transition_deliver_notifications_at_end": "",
+          "auto_transition_deliver_notifications_at_start": "",
+          "auto_transition_to_maintenance_state": "",
+          "auto_transition_to_operational_state": "",
+          "scheduled_remind_prior": "",
+          "scheduled_reminded_at": "",
+          "scheduled_until": "",
+          "shortlink": "",
+          "status": "",
+          "updated_at": "",
+          "reminder_intervals": ""
+        }
+      ]
+    },
+    {
+      "operation": "execute_api_request",
+      "title": "Execute an API Request",
+      "annotation": "execute_api_request",
+      "category": "utilities",
+      "endpoint": "",
+      "http_method": "POST",
+      "description": "Execute any Atlassian Status Page API endpoint using the specified API method, endpoint, and payload as input parameters.",
+      "enabled": true,
+      "visible": true,
+      "parameters": [
+        {
+          "name": "endpoint",
+          "title": "Endpoint",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "Specify the REST API endpoint for the action to perform. Note: Do not include the host URL in the endpoint. ex /v1/pages/{page_id}/incidents/unresolved or /v1/pages/{page_id}/incidents/{incident_id}.",
+          "description": "Specify the REST API endpoint for the action to perform. Note: Do not include the host URL in the endpoint. ex /v1/pages/{page_id}/incidents/unresolved or /v1/pages/{page_id}/incidents/{incident_id}."
+        },
+        {
+          "name": "method",
+          "title": "Method",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "value": "GET",
+          "description": "The HTTP Method to use",
+          "options": [
+            "DELETE",
+            "GET",
+            "PATCH",
+            "POST",
+            "PUT"
+          ]
+        },
+        {
+          "title": "Query Parameters",
+          "name": "query_params",
+          "type": "json",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "description": "Specify the he Rest API query parameters object in JSON format."
+        },
+        {
+          "title": "Request Body/Payload",
+          "name": "payload",
+          "type": "json",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "description": "The payload needed for the call. Use empty brackets if there is no payload."
+        }
+      ],
+      "output_schema": {}
+    }
+  ]
+}
