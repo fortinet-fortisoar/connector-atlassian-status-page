@@ -1,0 +1,879 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+      "@type": "WorkflowCollection",
+      "name": "Sample - Atlassian Status Page - 1.0.0",
+      "description": "This connector enables automated operations such as creating incidents, retrieving incident lists, managing active maintenances, and more.",
+      "visible": true,
+      "image": null,
+      "recordTags": [
+        "Atlassian",
+        "atlassian-status-page"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "uuid": "9966bfae-d8f5-43bf-aeac-2b01af914ae3",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Creates an incident in Atlassian Statuspage based on the provided input parameters.",
+          "name": "Create Incident",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/bec7318c-dbdf-4f6b-880d-b1c435a4b0d2",
+          "steps": [
+            {
+              "uuid": "bec7318c-dbdf-4f6b-880d-b1c435a4b0d2",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "55a3268c-294e-43d2-bc68-648e3521c59e",
+                "title": "Atlassian Status Page: Create Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "15e986a1-e1cd-47c1-80c1-9060cf32471c",
+              "@type": "WorkflowStep",
+              "name": "Create Incident",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "create_incident",
+                "operationTitle": "Create Incident",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "2814574b-cae5-43f5-af83-040c83e698d0",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Create Incident",
+              "sourceStep": "/api/3/workflow_steps/bec7318c-dbdf-4f6b-880d-b1c435a4b0d2",
+              "targetStep": "/api/3/workflow_steps/15e986a1-e1cd-47c1-80c1-9060cf32471c"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "6d69fe8d-f9e2-498a-ac43-55e5a86b6dfd",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieve a specific incident from from Atlassian Statuspage.",
+          "name": "Get Incident",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8fde0d8a-3f10-48ef-a137-dbd20133db30",
+          "steps": [
+            {
+              "uuid": "8fde0d8a-3f10-48ef-a137-dbd20133db30",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "6187b970-9778-4dd7-95fd-b4212f4c2a05",
+                "title": "Atlassian Status Page: Get Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "52006e3d-ab0f-49dc-ad37-a2af30ed5def",
+              "@type": "WorkflowStep",
+              "name": "Get Incident",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_incident",
+                "operationTitle": "Get Incident",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e0665d02-53f8-41b3-b366-7ad407d6a870",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Incident",
+              "sourceStep": "/api/3/workflow_steps/8fde0d8a-3f10-48ef-a137-dbd20133db30",
+              "targetStep": "/api/3/workflow_steps/52006e3d-ab0f-49dc-ad37-a2af30ed5def"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "bb2d3fef-126c-49df-b4bf-f30a5ce820dc",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Updates the details of an existing incident on a specific status page. This can include modifying the incident\u2019s name, status, impact, or other relevant fields.",
+          "name": "Update Incident",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f7b35ce8-2311-47b0-8376-c6c59f04eab1",
+          "steps": [
+            {
+              "uuid": "f7b35ce8-2311-47b0-8376-c6c59f04eab1",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "27869b6e-c368-4820-a0f6-78054af17499",
+                "title": "Atlassian Status Page: Update Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "fc27e5b1-751c-4f11-8f30-4e0c71ec23bf",
+              "@type": "WorkflowStep",
+              "name": "Update Incident",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "update_incident",
+                "operationTitle": "Update Incident",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "1c88f88a-ee86-4f7b-9b36-332aa9a7f9da",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Update Incident",
+              "sourceStep": "/api/3/workflow_steps/f7b35ce8-2311-47b0-8376-c6c59f04eab1",
+              "targetStep": "/api/3/workflow_steps/fc27e5b1-751c-4f11-8f30-4e0c71ec23bf"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "9af80fa1-0bb8-4544-855e-8e43abd59940",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Deletes a specific incident from a status page. This operation permanently removes the incident and all its associated updates from the page.",
+          "name": "Delete Incident",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/c17e81d0-ab4a-4b48-a60d-b23e1fcb2e3d",
+          "steps": [
+            {
+              "uuid": "c17e81d0-ab4a-4b48-a60d-b23e1fcb2e3d",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "34a210f1-4c77-4a23-ab2d-d7269aabb4f6",
+                "title": "Atlassian Status Page: Delete Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "606e0602-e1d6-4b8b-9211-cf5b2aa35716",
+              "@type": "WorkflowStep",
+              "name": "Delete Incident",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "delete_incident",
+                "operationTitle": "Delete Incident",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "aad00bd7-babd-485c-9326-40ae1cb0a01b",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Delete Incident",
+              "sourceStep": "/api/3/workflow_steps/c17e81d0-ab4a-4b48-a60d-b23e1fcb2e3d",
+              "targetStep": "/api/3/workflow_steps/606e0602-e1d6-4b8b-9211-cf5b2aa35716"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "a2fc1407-be5c-4c0a-b5f7-ed10cf0357e6",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of all status pages from Atlassian Statuspage.",
+          "name": "Get Status Pages",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d41ce864-3f0c-4881-9d13-54b1d4a5000c",
+          "steps": [
+            {
+              "uuid": "d41ce864-3f0c-4881-9d13-54b1d4a5000c",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "4f541182-a29c-4803-bfe3-f0de153efdfd",
+                "title": "Atlassian Status Page: Get Status Pages",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "15908558-df9a-45b9-9d94-5a37714b6f88",
+              "@type": "WorkflowStep",
+              "name": "Get Status Pages",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_list_status_pages",
+                "operationTitle": "Get Status Pages",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ff9b3990-c5fc-4462-b653-aced521387c7",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Status Pages",
+              "sourceStep": "/api/3/workflow_steps/d41ce864-3f0c-4881-9d13-54b1d4a5000c",
+              "targetStep": "/api/3/workflow_steps/15908558-df9a-45b9-9d94-5a37714b6f88"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "e9835744-4230-407b-af18-34c8b56b1984",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of active and historical incidents, including real-time outages and scheduled maintenance incidents associated with a specified Statuspage.",
+          "name": "Get Incident List",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/052218e9-d663-4bc3-b340-91cbb3020cec",
+          "steps": [
+            {
+              "uuid": "052218e9-d663-4bc3-b340-91cbb3020cec",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "3238c75b-cb3f-4443-861a-2ea559be16af",
+                "title": "Atlassian Status Page: Get Incident List",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "624aac6a-97c3-4710-8370-1d493c357bbb",
+              "@type": "WorkflowStep",
+              "name": "Get Incident List",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_list_incidents",
+                "operationTitle": "Get Incident List",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "aca20f84-113b-4070-9c1d-08fd7749bbb2",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Incident List",
+              "sourceStep": "/api/3/workflow_steps/052218e9-d663-4bc3-b340-91cbb3020cec",
+              "targetStep": "/api/3/workflow_steps/624aac6a-97c3-4710-8370-1d493c357bbb"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "ca272e12-1865-481f-a7bf-6293e6c0277e",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of all currently active scheduled maintenance incidents for the specified Statuspage.",
+          "name": "Get Active Maintenance Incidents",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1a2cc627-73b8-47b9-9295-8a480508871d",
+          "steps": [
+            {
+              "uuid": "1a2cc627-73b8-47b9-9295-8a480508871d",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "dd083c0a-7077-45a9-bdd1-f368b09a705f",
+                "title": "Atlassian Status Page: Get Active Maintenance Incidents",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "034ab28c-4d6e-4db0-9fe1-dcd0bba3519c",
+              "@type": "WorkflowStep",
+              "name": "Get Active Maintenance Incidents",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_active_maintenance",
+                "operationTitle": "Get Active Maintenance Incidents",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "73055d53-3723-4a60-83fd-0635ed909b1a",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Active Maintenance Incidents",
+              "sourceStep": "/api/3/workflow_steps/1a2cc627-73b8-47b9-9295-8a480508871d",
+              "targetStep": "/api/3/workflow_steps/034ab28c-4d6e-4db0-9fe1-dcd0bba3519c"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "9eab148a-9836-4280-83d8-bfa4e7ccfb2d",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of upcoming incidents scheduled for a specific status page. Upcoming incidents are those that have been created and scheduled but have not yet started.",
+          "name": "Get Upcoming Incidents",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/333adc44-aff5-4966-8992-b4ff13ff9808",
+          "steps": [
+            {
+              "uuid": "333adc44-aff5-4966-8992-b4ff13ff9808",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "431efd55-47b1-46ba-bbf8-9b5206c46ccb",
+                "title": "Atlassian Status Page: Get Upcoming Incidents",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "152dee98-eb9c-46b6-9497-8d02bf791d0f",
+              "@type": "WorkflowStep",
+              "name": "Get Upcoming Incidents",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_upcoming_incidents",
+                "operationTitle": "Get Upcoming Incidents",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "13fb4bc5-019b-4f5d-8d8f-689854b0e187",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Upcoming Incidents",
+              "sourceStep": "/api/3/workflow_steps/333adc44-aff5-4966-8992-b4ff13ff9808",
+              "targetStep": "/api/3/workflow_steps/152dee98-eb9c-46b6-9497-8d02bf791d0f"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "97bdfec4-ce8b-437f-a788-977df0959a8f",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of all scheduled incidents, including both upcoming and ongoing scheduled maintenance events, for a specific status page.",
+          "name": "Get Scheduled Incidents",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a992f939-69b6-41cf-9108-ad3865490080",
+          "steps": [
+            {
+              "uuid": "a992f939-69b6-41cf-9108-ad3865490080",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "8b448a96-3987-42ba-8244-ec21ee3b8d1d",
+                "title": "Atlassian Status Page: Get Scheduled Incidents",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "e3db7c30-f1e2-46b2-b250-0fc913965ae3",
+              "@type": "WorkflowStep",
+              "name": "Get Scheduled Incidents",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_scheduled_incidents",
+                "operationTitle": "Get Scheduled Incidents",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5c136771-de1d-481d-a7ab-8fa0af9eac7c",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Scheduled Incidents",
+              "sourceStep": "/api/3/workflow_steps/a992f939-69b6-41cf-9108-ad3865490080",
+              "targetStep": "/api/3/workflow_steps/e3db7c30-f1e2-46b2-b250-0fc913965ae3"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "fec6832e-9f64-4aa7-a25a-1762958d1231",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Retrieves a list of all unresolved incidents for a specific status page. Unresolved incidents are those that are currently open and have not yet been marked as resolved",
+          "name": "Get Unresolved Incidents",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/5869eb7f-25a9-4260-81b8-d23484348b2d",
+          "steps": [
+            {
+              "uuid": "5869eb7f-25a9-4260-81b8-d23484348b2d",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "677a1e72-bafa-4750-85c5-7a7031386e00",
+                "title": "Atlassian Status Page: Get Unresolved Incidents",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "af20a667-f191-436b-84c4-05cc8009b52a",
+              "@type": "WorkflowStep",
+              "name": "Get Unresolved Incidents",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "get_unresolved_incidents",
+                "operationTitle": "Get Unresolved Incidents",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "1972409b-cbdf-49bf-bc60-6cfd06014e10",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Get Unresolved Incidents",
+              "sourceStep": "/api/3/workflow_steps/5869eb7f-25a9-4260-81b8-d23484348b2d",
+              "targetStep": "/api/3/workflow_steps/af20a667-f191-436b-84c4-05cc8009b52a"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "88190d41-25d6-499e-a6ca-bdd2c7e49834",
+          "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
+          "triggerLimit": null,
+          "description": "Execute any Atlassian Status Page API endpoint using the specified API method, endpoint, and payload as input parameters.",
+          "name": "Execute an API Request",
+          "tag": "#Atlassian Status Page",
+          "recordTags": [
+            "Atlassian",
+            "atlassian-status-page"
+          ],
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0d971646-bf71-4af5-81d0-90e5acf35bb2",
+          "steps": [
+            {
+              "uuid": "0d971646-bf71-4af5-81d0-90e5acf35bb2",
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "1245a37b-f852-44ed-a2f1-18b2f1050a1a",
+                "title": "Atlassian Status Page: Execute an API Request",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "singleRecordExecution": false,
+                "noRecordExecution": true,
+                "executeButtonText": "Execute"
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "19d7d83d-25ad-48a5-b88e-28abbd920898",
+              "@type": "WorkflowStep",
+              "name": "Execute an API Request",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "Atlassian Status Page",
+                "config": "''",
+                "params": {
+                  "method": "GET"
+                },
+                "version": "1.0.0",
+                "connector": "atlassian-status-page",
+                "operation": "execute_api_request",
+                "operationTitle": "Execute an API Request",
+                "step_variables": {}
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "4b0defff-549e-4241-b958-f0e5a1b5e8ed",
+              "label": null,
+              "isExecuted": false,
+              "name": "Start-> Execute an API Request",
+              "sourceStep": "/api/3/workflow_steps/0d971646-bf71-4af5-81d0-90e5acf35bb2",
+              "targetStep": "/api/3/workflow_steps/19d7d83d-25ad-48a5-b88e-28abbd920898"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
