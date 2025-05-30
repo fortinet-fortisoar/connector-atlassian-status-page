@@ -331,7 +331,7 @@
           "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
           "triggerLimit": null,
           "description": "Retrieves a list of all status pages from Atlassian Statuspage.",
-          "name": "Get List Status Pages",
+          "name": "Get Status Pages",
           "tag": "#Atlassian Status Page",
           "recordTags": [
             "Atlassian",
@@ -352,7 +352,7 @@
               "status": null,
               "arguments": {
                 "route": "4f541182-a29c-4803-bfe3-f0de153efdfd",
-                "title": "Atlassian Status Page: Get List Status Pages",
+                "title": "Atlassian Status Page: Get Status Pages",
                 "resources": [
                   "alerts"
                 ],
@@ -373,7 +373,7 @@
             {
               "uuid": "15908558-df9a-45b9-9d94-5a37714b6f88",
               "@type": "WorkflowStep",
-              "name": "Get List Status Pages",
+              "name": "Get Status Pages",
               "description": null,
               "status": null,
               "arguments": {
@@ -383,7 +383,7 @@
                 "version": "1.0.0",
                 "connector": "atlassian-status-page",
                 "operation": "get_list_status_pages",
-                "operationTitle": "Get List Status Pages",
+                "operationTitle": "Get Status Pages",
                 "step_variables": {}
               },
               "left": "188",
@@ -397,7 +397,7 @@
               "uuid": "ff9b3990-c5fc-4462-b653-aced521387c7",
               "label": null,
               "isExecuted": false,
-              "name": "Start-> Get List Status Pages",
+              "name": "Start-> Get Status Pages",
               "sourceStep": "/api/3/workflow_steps/d41ce864-3f0c-4881-9d13-54b1d4a5000c",
               "targetStep": "/api/3/workflow_steps/15908558-df9a-45b9-9d94-5a37714b6f88"
             }
@@ -409,7 +409,7 @@
           "collection": "/api/3/workflow_collections/6e661e29-83ba-4cf3-9a47-dbbf6d806817",
           "triggerLimit": null,
           "description": "Retrieves a list of active and historical incidents, including real-time outages and scheduled maintenance incidents associated with a specified Statuspage.",
-          "name": "Get List Incidents",
+          "name": "Get Incident List",
           "tag": "#Atlassian Status Page",
           "recordTags": [
             "Atlassian",
@@ -430,7 +430,7 @@
               "status": null,
               "arguments": {
                 "route": "3238c75b-cb3f-4443-861a-2ea559be16af",
-                "title": "Atlassian Status Page: Get List Incidents",
+                "title": "Atlassian Status Page: Get Incident List",
                 "resources": [
                   "alerts"
                 ],
@@ -451,7 +451,7 @@
             {
               "uuid": "624aac6a-97c3-4710-8370-1d493c357bbb",
               "@type": "WorkflowStep",
-              "name": "Get List Incidents",
+              "name": "Get Incident List",
               "description": null,
               "status": null,
               "arguments": {
@@ -461,7 +461,7 @@
                 "version": "1.0.0",
                 "connector": "atlassian-status-page",
                 "operation": "get_list_incidents",
-                "operationTitle": "Get List Incidents",
+                "operationTitle": "Get Incident List",
                 "step_variables": {}
               },
               "left": "188",
@@ -475,7 +475,7 @@
               "uuid": "aca20f84-113b-4070-9c1d-08fd7749bbb2",
               "label": null,
               "isExecuted": false,
-              "name": "Start-> Get List Incidents",
+              "name": "Start-> Get Incident List",
               "sourceStep": "/api/3/workflow_steps/052218e9-d663-4bc3-b340-91cbb3020cec",
               "targetStep": "/api/3/workflow_steps/624aac6a-97c3-4710-8370-1d493c357bbb"
             }

@@ -6,7 +6,7 @@
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
-  "category": "Incident Management",
+  "category": "Monitoring",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "help_online": "",
@@ -99,7 +99,7 @@
             "Scheduled": [
               {
                 "name": "scheduled_for",
-                "title": "Scheduled from",
+                "title": "Scheduled Start Time",
                 "description": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
                 "tooltip": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
                 "type": "datetime",
@@ -109,7 +109,7 @@
               },
               {
                 "name": "scheduled_until",
-                "title": "Scheduled from",
+                "title": "Scheduled End Time",
                 "description": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
                 "tooltip": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
                 "type": "datetime",
@@ -512,7 +512,7 @@
             "Scheduled": [
               {
                 "name": "scheduled_for",
-                "title": "Scheduled from",
+                "title": "Scheduled Start Time",
                 "description": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
                 "tooltip": "Specifies the scheduled start time for the incident. This parameter is used when creating a scheduled incident (such as planned maintenance) rather than an active or real-time incident.",
                 "type": "datetime",
@@ -522,7 +522,7 @@
               },
               {
                 "name": "scheduled_until",
-                "title": "Scheduled from",
+                "title": "Scheduled End Time",
                 "description": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
                 "tooltip": "Specifies the scheduled end time for the incident. This parameter is used when creating a scheduled incident (typically planned maintenance) and defines when the maintenance is expected to be completed.",
                 "type": "datetime",
@@ -696,8 +696,8 @@
         {
           "name": "page_id",
           "title": "Page ID",
-          "description": "Specify the unique identifier of the status page from which the incident should be deleted.",
-          "tooltip": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "description": "Specify the unique identifier of the status page from which you want to delete the specified incident.",
+          "tooltip": "Specify the unique identifier of the status page from which you want to delete the specified incident.",
           "type": "text",
           "required": true,
           "editable": true,
@@ -706,8 +706,8 @@
         {
           "name": "incident_id",
           "title": "Incident ID",
-          "description": "Specify the unique identifier of the incident to be deleted.",
-          "tooltip": "Specify the unique identifier of the incident to be deleted.",
+          "description": "Specify the unique identifier of the incident which you want to delete.",
+          "tooltip": "Specify the unique identifier of the incident which you want to delete.",
           "type": "text",
           "required": true,
           "editable": true,
@@ -807,8 +807,8 @@
     },
     {
       "operation": "get_list_status_pages",
-      "title": "Get List Status Pages",
-      "annotation": "get_list_status_pages",
+      "title": "Get Status Pages",
+      "annotation": "get_status_pages",
       "category": "investigation",
       "description": "Retrieves a list of all status pages from Atlassian Statuspage.",
       "enabled": true,
@@ -867,8 +867,8 @@
     },
     {
       "operation": "get_list_incidents",
-      "title": "Get List Incidents",
-      "annotation": "get_list_incidents",
+      "title": "Get Incident List",
+      "annotation": "get_incident_list",
       "category": "investigation",
       "description": "Retrieves a list of active and historical incidents, including real-time outages and scheduled maintenance incidents associated with a specified Statuspage.",
       "enabled": true,

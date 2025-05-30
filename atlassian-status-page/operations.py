@@ -172,5 +172,6 @@ operations_map = {
     'get_upcoming_incidents': get_upcoming_incidents,
     'get_scheduled_incidents': get_scheduled_incidents,
     'get_unresolved_incidents': get_unresolved_incidents,
+    'execute_api_request': execute_api_request
 
 }
