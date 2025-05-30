@@ -341,8 +341,8 @@
         {
           "name": "page_id",
           "title": "Page ID",
-          "description": "Specify the unique identifier of the status page from which the incident should be deleted.",
-          "tooltip": "Specify the unique identifier of the status page from which the incident should be deleted.",
+          "description": "Specify the unique identifier of the status page from which to retrieve the details of the specified incident.",
+          "tooltip": "Specify the unique identifier of the status page from which to retrieve the details of the specified incident.",
           "type": "text",
           "required": true,
           "editable": true,
@@ -351,8 +351,8 @@
         {
           "name": "incident_id",
           "title": "Incident ID",
-          "description": "Specify the unique identifier of the incident to be deleted.",
-          "tooltip": "Specify the unique identifier of the incident to be deleted.",
+          "description": "Specify the unique identifier of the incident to retrieve its details.",
+          "tooltip": "Specify the unique identifier of the incident to retrieve its details.",
           "type": "text",
           "required": true,
           "editable": true,
