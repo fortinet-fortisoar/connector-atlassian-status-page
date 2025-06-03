@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "description": "This connector enables automated operations such as creating incidents, retrieving incident lists, managing active maintenances, and more.",
   "publisher": "Fortinet",
-  "cs_approved": true,
+  "cs_approved": false,
   "cs_compatible": true,
   "category": "Monitoring",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
-  "help_online": "",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-atlassian-status-page/blob/release/1.0.0/docs/AtlassianStatusPageDoc.md",
   "configuration": {
     "fields": [
       {
